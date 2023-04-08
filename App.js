@@ -102,25 +102,25 @@ myApp.post('/login', function(req, res){
 
 });
 
-
-myApp.put('/user-update', upload.array('pic'), function(req, res){
+//upload.array('pic'),
+myApp.put('/user-update',  function(req, res){
   
   
-  req.body.pic = req.body.email + '/' + req.files[0].originalname;
+  // req.body.pic = req.body.email + '/' + req.files[0].originalname;
 
   let userIndex = users.findIndex(user=>user.id === req.body.id);
   
-  let user = users[userIndex];
-  fs.renameSync('./my-uploads/' + user.email, './my-uploads/'+req.body.email);
+  // let user = users[userIndex];
+  // fs.renameSync('./my-uploads/' + user.email, './my-uploads/'+req.body.email);
   
   users[userIndex] = req.body;
 
   console.log(users[userIndex]);
   console.log(req.body.id);
 
-  // console.log(userIndex);
+  console.log(userIndex);
   // console.log(req.body.id);
-  // res.json(userIndex)
+  res.json(userIndex)
 
   res.json({
       success:true
@@ -140,30 +140,31 @@ myApp.get('/user-lao', function(req, res){
 
 myApp.delete('/user-delete', function (req, res) {
 
-  let user = users.find(user=>user.id === req.query.anc);
+  // let user = users.find(user=>user.id === req.query.anc);
   // console.log(user);
 
-  let dirPath = './my-uploads/' + user.email
+  // let dirPath = './my-uploads/' + user.email
 
-  if(fs.existsSync(dirPath)){
-    fs.rmSync(dirPath, { recursive: true, force: true });
-  }
+  // if(fs.existsSync(dirPath)){
+  //   fs.rmSync(dirPath, { recursive: true, force: true });
+  // }
 
   users = users.filter(user => user.id !== req.query.anc);
   res.json(
     { 
       success: true,
-      user
+      users
     }
   )
   // console.log(req.query.anc);
 });
 
+// upload.array('pic',20),
+myApp.post('/create-user',  function (request, response) {
 
-myApp.post('/create-user', upload.array('pic',20), function (request, response) {
-
-  request.body.pic = request.body.email +'/'+ request.files[0].originalname;
+  // request.body.pic = request.body.email +'/'+ request.files[0].originalname;
   users.push(request.body);
+  console.log(request.body);
   // let userMilgya = users.find(user=>user.email === request.body.email);
   // if(userMilgya){
   //   response.status = 403;
