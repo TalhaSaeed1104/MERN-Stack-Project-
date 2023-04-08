@@ -272,10 +272,13 @@ myApp.use(myExpress.static('./build'));
 myApp.use(myExpress.static('./my-uploads'));
 myApp.use(myExpress.static('./my-products'));
 
+myApp.get('*' , function(req,res){
+  res.sendFile('./build/index.html')
+})
+
 myApp.use(function(err, req, res, cb){
     res.status(500).json(err);
 })
-
 
 myApp.listen(3003, function () {
   console.log('Code is Activated');
